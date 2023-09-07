@@ -4,6 +4,7 @@
 <head>
     <title>Data Render</title>
     <link href="css\style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
@@ -53,6 +54,17 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
         <script>
+            function getStars(rating) {
+                rating = Math.round(rating * 2) / 2;
+                let output = [];
+                for (var i = rating; i >= 1; i--)
+                    output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+                if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+                for (let i = (5 - rating); i >= 1; i--)
+                    output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+                return output.join('');
+            }
+
             $(document).ready(function() {
                 $('#btnShow').click(function(event) {
                     $.ajax({
@@ -91,6 +103,7 @@
 
                 $('#tableProduct').on('click', '.btn-detail', function() {
                     const id = $(this).data('id');
+
                     $.ajax({
                         dataType: 'json'
                         , url: 'https://dummyjson.com/products/' + id
@@ -100,6 +113,7 @@
                         , processData: false
                         , success: function(res) {
                             console.log(res)
+                            const star = getStars(res.rating)
                             $('#modalDetail').modal('show')
                             const modalBody = $('#modalDetail .modal-body');
                             modalBody.empty();
@@ -117,7 +131,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <h3>Price: $${res.price}</h3>
+                                    <div class="d-flex justify-content-between">
+                                        <h3>Price: $${res.price}</h3>
+                                        <div id="star">${star}</div>
+                                        </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Category: ${res.category}</span>
                                         <span>Brand: ${res.brand}</span>
@@ -129,8 +146,8 @@
                             </div>
                         </div>
                             `
-
                             modalBody.append(markup)
+
                         }
                         , error: function(error) {
                             console.log(error)
