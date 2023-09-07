@@ -10,7 +10,7 @@
 <body>
     <div class="container py-2">
         <div class="row">
-            <div class="col-8" style="border:1px solid black;">
+            <div class="col-10" style="border:1px solid black;">
                 <h3><b><u>Product List</u></b></h3>
                 <div class="d-flex justify-content-end mb-1">
                     <a href="#" id="btnShow" class="btn btn-primary">Show Products</a>
