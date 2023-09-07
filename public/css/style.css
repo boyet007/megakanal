@@ -1,5 +1,21 @@
+body {
+    font-family: Monaco, verdana !important;
+}
+
 #tableProduct tr > td > img {
     width: 150px;
     height: 100px;
     object-fit: cover;
+}
+
+.image-detail {
+    width: 100%;
+}
+
+.image-thumbnail {
+    width: 20%;
+}
+
+.modal-body span {
+    display: block;
 }
