@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="container mt-2">
+    <div class="container py-2">
         <div class="row">
             <div class="col-8" style="border:1px solid black;">
                 <h3><b><u>Product List</u></b></h3>
@@ -32,7 +32,7 @@
                     </tbody>
                 </table>
                 <div class="mb-5">
-                    <span class="text-gray">SHOW 20 ITEMS</span>
+                    <span id="textResult" class="text-gray"></span>
                 </div>
             </div>
         </div>
@@ -52,21 +52,24 @@
                     , processData: false
                     , success: function(res) {
                         let markup = ''
+                        let limit = res.limit;
+
                         $.each(res.products, function(index, value) {
-                            console.log(index, value)
                             markup += `<tr>
                                             <td><img src="${value.images[0]}" /></td>
                                             <td>${value.title}</td>
                                             <td>${value.category}</td>
                                             <td>${value.brand}</td>
-                                            <td>${value.stock}</td>
-                                            <td class="text-nowrap">$ ${value.price}</td>
+                                            <td class="text-end">${value.stock}</td>
+                                            <td class="text-end text-nowrap">$ ${value.price}</td>
                                             <td><a class="btn btn-primary">View</a></td>
                                         </tr>`;
                         });
 
                         tableBody = $("#tableProduct tbody")
+                        tableBody.empty();
                         tableBody.append(markup)
+                        $('#textResult').html(`SHOW: ${limit} ITEMS`)
                     }
                     , error: function(error) {
                         console.log(error)
