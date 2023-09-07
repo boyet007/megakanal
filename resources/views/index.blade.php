@@ -65,6 +65,16 @@
                 return output.join('');
             }
 
+            function getOrderNumber() {
+
+            }
+
+            function getDateTime() {
+                const dt = new Date();
+                const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+                return (`${dt.getFullYear()}-${padL(dt.getMonth()+1)}-${padL(dt.getDate())} ${padL(dt.getHours())}:${padL(dt.getMinutes())}:${padL(dt.getSeconds())}`);
+            }
+
             $(document).ready(function() {
                 $('#btnShow').click(function(event) {
                     $.ajax({
@@ -103,7 +113,6 @@
 
                 $('#tableProduct').on('click', '.btn-detail', function() {
                     const id = $(this).data('id');
-
                     $.ajax({
                         dataType: 'json'
                         , url: 'https://dummyjson.com/products/' + id
@@ -140,20 +149,36 @@
                                         <span>Brand: ${res.brand}</span>
                                     </div>
                                     <span class="mb-3">Stock: ${res.stock}</span>
-                                    <span>Description: </span>
-                                    <span class="text-justify">${res.description}</span>
+                                    <span">Description: </span>
+                                    <span class="text-justify mb-3">${res.description}</span>
+                                    <form id="formPesan" class="row">
+                                        <input type="hidden" name="nm_produk" value="${res.title}" />
+                                        <input type="hidden" name="harga" value="${res.price}" />
+                                        <div class="col">
+                                            <input class="form-control" type="number" value="1" min="1" max="${res.stock}" name="qty" />
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-primary">Pesan</button>
+                                        </div>
+                                    </form>    
                                 </div>
                             </div>
                         </div>
                             `
                             modalBody.append(markup)
-
                         }
                         , error: function(error) {
                             console.log(error)
                         }
                     });
                 });
+
+                $('#modalDetail').on('submit', '#formPesan', function(e) {
+                    e.preventDefault();
+                    const waktu = getDateTime();
+                    console.log(waktu)
+
+                })
             });
 
         </script>
