@@ -44,30 +44,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h3><u>Iphone 9</u></h3>
-                                    <img class="img image-detail" src="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80">
-                                    <div class="d-flex justify-content-center">
-                                        <img class="img image-thumbnail p-1" src="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80">
-                                        <img class="img image-thumbnail p-1" src="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80">
-                                        <img class="img image-thumbnail p-1" src="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80">
-                                        <img class="img image-thumbnail p-1" src="https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h3>Price: $549</h3>
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span>Category: Smartphone</span>
-                                        <span>Brand: Apple</span>
-                                    </div>
-                                    <span class="mb-3">Stock: 900</span>
-                                    <span>Description: </span>
-                                    <span class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita saepe quaerat quasi laboriosam incidunt, maxime fuga, quod provident corporis rem perferendis unde atque quas!</span>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -91,7 +68,7 @@
 
                             $.each(res.products, function(index, value) {
                                 markup += `<tr>
-                                            <td><img src="${value.images[0]}" /></td>
+                                            <td><img src="${value.thumbnail}" /></td>
                                             <td>${value.title}</td>
                                             <td>${value.category}</td>
                                             <td>${value.brand}</td>
@@ -124,6 +101,36 @@
                         , success: function(res) {
                             console.log(res)
                             $('#modalDetail').modal('show')
+                            const modalBody = $('#modalDetail .modal-body');
+                            modalBody.empty();
+                            const markup = `
+                            <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3><u>${res.title}</u></h3>
+                                    <img class="img image-detail mb-1" src="${res.images[0]}">
+                                    <div class="d-flex justify-content-between">
+                                        <img class="img image-thumbnail" src="${res.images[1]}">
+                                        <img class="img image-thumbnail" src="${res.images[2]}">
+                                        <img class="img image-thumbnail" src="${res.images[3]}">
+                                        <img class="img image-thumbnail" src="${res.images[4]}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3>Price: $${res.price}</h3>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Category: ${res.category}</span>
+                                        <span>Brand: ${res.brand}</span>
+                                    </div>
+                                    <span class="mb-3">Stock: ${res.stock}</span>
+                                    <span>Description: </span>
+                                    <span class="text-justify">${res.description}</span>
+                                </div>
+                            </div>
+                        </div>
+                            `
+
+                            modalBody.append(markup)
                         }
                         , error: function(error) {
                             console.log(error)
@@ -134,4 +141,5 @@
 
         </script>
 </body>
+
 </html>
